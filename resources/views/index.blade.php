@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Recording</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="WebRTC getUserMedia MediaRecorder API">
-    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" src="{{ asset('css/style.css') }}"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
-      button{
-        margin: 10px 5px;
-      }
-      li{
-        margin: 10px;
-        padding
-      }
-      li video{
-        width: 90%;
-        margin-right: 20px;
-      }
-      body{
-        width: 90%;
-        max-width: 960px;
-        margin: 0px auto;
-      }
-      #btns{
-        display: none;
-      }
-      h1{
-        margin: 100px;
-      }
+<head>
+    <title>Kios</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <style type="text/css">
+        #results { padding:20px; border:1px solid; background:#ccc; }
     </style>
-  </head>
-  <body>
-    <div>
-        <video autoplay="true" id="video-webcam">
-            Browser does not support
-        </video>
+</head>
+<body>
+
+<div class="container mb-2">
+    <div class="mt-3">
+        @include('msg')
     </div>
-    <div id='gUMArea'>
-      <div hidden>
-      Record:
-        <input type="radio" name="media" value="video" checked id='mediaVideo'>Video
-        <input type="radio" name="media" value="audio">audio
-      </div>
-      <button class="btn btn-default"  id='gUMbtn'>Request Stream</button>
-    </div>
-    <div id='btns'>
-      <button  class="btn btn-default" id='start'>Start</button>
-      <button  class="btn btn-default" id='stop'>Stop</button>
-    </div>
-    <div>
-      <ul class="list-unstyled" id='ul'></ul>
-    </div>
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/script.js') }}"></script>
-  </body>
+    <form action="{{ route('info.create') }}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="row">
+            <div class="col-md-6">
+                <div id="my_camera"></div>
+                <br/>
+                <input type=button class="btn btn-sm btn-primary" value="Take Snapshot" onClick="take_snapshot()">
+                <input type="hidden"  name="image" class="image-tag">
+            </div>
+            <div class="col-md-6">
+                <div id="results">Captured image</div>
+            </div>
+            <div class="col-md-12 text-center">
+                <br/>
+                <button type="submit" class="btn btn-success mt-2">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Configure a few settings and attach camera -->
+<script language="JavaScript">
+    Webcam.set({
+        width: 490,
+        height: 390,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+    Webcam.attach( '#my_camera' );
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+        } );
+    }
+</script>
+
+</body>
 </html>

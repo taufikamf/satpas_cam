@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Info extends Model
 {
-    protected $fillable = ['name','age','image'];
+    protected $fillable = ['image','base64'];
 }

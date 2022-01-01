@@ -15,9 +15,8 @@ class CreateInfosTable extends Migration
     {
         Schema::create('infos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
-            $table->integer('age')->nullable();
             $table->string('image')->nullable();
+            $table->text('base64')->nullable();
             $table->timestamps();
         });
     }
