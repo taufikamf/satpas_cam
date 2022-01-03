@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cam;
 use Illuminate\Http\Request;
 
 class CamController extends Controller
@@ -13,7 +14,7 @@ class CamController extends Controller
      */
     public function index()
     {
-        //
+        return view('cam');
     }
 
     /**
@@ -21,9 +22,15 @@ class CamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $base64 =  $request->get('base64');
+
+        Cam::create([
+            'base64' => $base64,
+        ]);
+
+        return view('cam');
     }
 
     /**

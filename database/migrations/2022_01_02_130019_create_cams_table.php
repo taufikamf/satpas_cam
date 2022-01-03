@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInfosTable extends Migration
+class CreateCamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('infos', function (Blueprint $table) {
+        Schema::create('cams', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('image')->nullable();
-            $table->text('base64')->nullable();
+            $table->longText('base64')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('infos');
+        Schema::dropIfExists('cams');
     }
 }
